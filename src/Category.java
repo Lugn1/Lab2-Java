@@ -3,7 +3,6 @@ import java.util.Objects;
 
 public class Category {
     private String categoryName;
-    private String TESTSTRING;
 
     public Category(String categoryName) {
         this.categoryName = getCategoryName();
