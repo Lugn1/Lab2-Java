@@ -1,52 +1,71 @@
 import java.util.Scanner;
 
+ //TODO on startup read from file
+
 public class Main {
-
-    Category fruit = new Category("Fruit");
-
-    Product banana = new Product("Fruit", "Banana", 5);
     public static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
+        Main menu = new Main();
+        menu.runMenu();
 
-        // TODO On startup: Read information from file
+        System.out.println("Shutting down...");
+    }
+
+    public static void printMainMenu(){
+        System.out.println("""
+                \t\tWelcome to the store
+                --------------------------------------
+                1. Show all categories
+                2. Add new category
+                3. Show all products
+                4. Search for products
+                5. Manage stock balance
+                0. Exit program
+
+                Enter menu option number and press enter: \r""");
+    }
+    private void runMenu() {
 
         boolean flag = true;
 
-        System.out.println("---- Welcome to the shop ------" +
-                "\n1. Browse categories" +
-                "\n2. Create new category" +
-                "\n3. Manage inventory balance" +
-                "\n4. Search for products" +
-                "\nEnter menu option number and press enter: \r");
-
         while (flag) {
-            try {
-                int userChoice = scanner.nextInt();
-                flag = false;
+            printMainMenu();
+                char userChoice = scanner.next().charAt(0);
+                scanner.nextLine();
                 switch (userChoice) {
-                    case 1:
-                        System.out.println("Browsing...");
+                    case '1':
+                        CategoryManager.printAllCategories();
+                        pressEnterToContinue();
                         break;
-                    case 2:
-                        System.out.println("Creating category...");
+                    case '2':
+                        CategoryManager.createNewCategory();
                         break;
-                    case 3:
-                        System.out.println("Managing inventory balance....");
+                    case '3':
+                        ProductManager.printAllProducts();
                         break;
-                    case 4:
-                        System.out.println("Searching for products...");
+                    case '4':
+                        ProductManager.searchProducts();
+                        break;
+                    case '5':
+                        ProductManager.changeStorageAmount();
+                        break;
+                    case '6':
+                        //CategoryManager.readCategories();
+                        break;
+                    case '0':
+                        flag = false;
                         break;
                     default:
-                        flag = true;
-                        System.out.println("Not an option, try again: ");
+                        System.out.println("Not an valid option, try again.\n");
                 }
-            }catch (Exception e){
-                System.out.println("Not an option, try again:");
-                scanner.nextLine();
-                flag = true;
             }
         }
+
+    public static void pressEnterToContinue() {
+        System.out.println("Press \"ENTER\" to continue..");
+        scanner.nextLine();
     }
+
 }
 

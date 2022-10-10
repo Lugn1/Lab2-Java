@@ -1,35 +1,32 @@
-import java.util.Arrays;
-import java.util.Objects;
-
 public class Category {
+
     private String categoryName;
 
     public Category(String categoryName) {
-        this.categoryName = getCategoryName();
+        this.categoryName = categoryName;
     }
 
     public String getCategoryName() {
         return categoryName;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == this) return true;
-        if (obj == null || obj.getClass() != this.getClass()) return false;
-        var that = (Category) obj;
-        return Objects.equals(this.categoryName, that.categoryName);
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
+
 
     @Override
     public int hashCode() {
-        return Objects.hash(categoryName);
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
     }
 
     @Override
     public String toString() {
-        return "Category[" +
-                "categoryName=" + categoryName + ']';
+        return super.toString();
     }
-
-
 }
