@@ -1,3 +1,5 @@
+package Laboration2;
+
 import java.util.Scanner;
 
  //TODO on startup read from file
@@ -6,21 +8,24 @@ public class Main {
     public static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
+       //FileWriter.createProductList();
+
         Main menu = new Main();
         menu.runMenu();
 
         System.out.println("Shutting down...");
     }
 
-    public static void printMainMenu(){
+    public static void printMainMenu(){     // TODO egen meny klass
         System.out.println("""
                 \t\tWelcome to the store
                 --------------------------------------
-                1. Show all categories
-                2. Add new category
-                3. Show all products
+                1. Show a list of all products
+                2. Add a new product 
+                3. Manage product
                 4. Search for products
-                5. Manage stock balance
+                5. Filter products by price KANSKE????
+                6. read from file
                 0. Exit program
 
                 Enter menu option number and press enter: \r""");
@@ -32,26 +37,24 @@ public class Main {
         while (flag) {
             printMainMenu();
                 char userChoice = scanner.next().charAt(0);
-                scanner.nextLine();
                 switch (userChoice) {
                     case '1':
-                        CategoryManager.printAllCategories();
-                        pressEnterToContinue();
+                        FileWriter.printFileAsStream();
                         break;
                     case '2':
-                        CategoryManager.createNewCategory();
+                        //Laboration2.ProductManager.createNewProduct();
                         break;
                     case '3':
-                        ProductManager.printAllProducts();
+                        ProductManager.manageProductMenu();
                         break;
                     case '4':
                         ProductManager.searchProducts();
                         break;
                     case '5':
-                        ProductManager.changeStorageAmount();
+                        ProductManager.searchProductsByPrice();
                         break;
                     case '6':
-                        //CategoryManager.readCategories();
+                        //FileWriter.printFileAsStream();
                         break;
                     case '0':
                         flag = false;
