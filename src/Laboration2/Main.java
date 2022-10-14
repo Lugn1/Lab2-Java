@@ -21,48 +21,34 @@ public class Main {
                 \t\tWelcome to the store
                 --------------------------------------
                 1. Show a list of all products
-                2. Add a new product 
+                2. Add a new product
                 3. Manage product
                 4. Search for products
                 5. Filter products by price KANSKE????
                 6. SAVE TO FILE
-                e. Save and exit 
+                e. Save and exit
 
                 Enter menu option number and press enter: \r""");
     }
     private void runMenu() {
 
-        boolean flag = true;
-
-        while (flag) {
+        while (true) {
             printMainMenu();
                 char userChoice = scanner.next().charAt(0);
-                switch (userChoice) {
-                    case '1':
-                        ProductManager.printAllProducts();
-                        break;
-                    case '2':
-                        ProductManager.createNewProduct();
-                        break;
-                    case '3':
-                        ProductManager.manageProductMenu();
-                        break;
-                    case '4':
-                        ProductManager.searchProducts();
-                        break;
-                    case '5':
-                        ProductManager.searchProductsByPrice();
-                        break;
-                    case '6':
-                        FileWriter.saveProductsToFile();
-                        break;
-                    case 'e':
-                        FileWriter.saveProductsToFile();
-                        System.out.println("Shutting down...");
-                        System.exit(0);
-                    default:
-                        System.out.println("Not an valid option, try again.\n");
+            switch (userChoice) {
+                case '1' -> ProductManager.printAllProducts();
+                case '2' -> ProductManager.createNewProduct();
+                case '3' -> ProductManager.manageProductMenu();
+                case '4' -> ProductManager.searchProducts();
+                case '5' -> ProductManager.searchProductsByPrice();
+                case '6' -> FileWriter.saveProductsToFile();
+                case 'e' -> {
+                    FileWriter.saveProductsToFile();
+                    System.out.println("Shutting down...");
+                    System.exit(0);
                 }
+                default -> System.out.println("Not an valid option, try again.\n");
+            }
             }
         }
 }
