@@ -8,12 +8,12 @@ public class Main {
     public static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-       //FileWriter.createProductList();
+       FileWriter.createProductList();
 
         Main menu = new Main();
         menu.runMenu();
 
-        System.out.println("Shutting down...");
+
     }
 
     public static void printMainMenu(){     // TODO egen meny klass
@@ -25,8 +25,8 @@ public class Main {
                 3. Manage product
                 4. Search for products
                 5. Filter products by price KANSKE????
-                6. read from file
-                0. Exit program
+                6. SAVE TO FILE
+                e. Save and exit 
 
                 Enter menu option number and press enter: \r""");
     }
@@ -39,10 +39,10 @@ public class Main {
                 char userChoice = scanner.next().charAt(0);
                 switch (userChoice) {
                     case '1':
-                        FileWriter.printFileAsStream();
+                        ProductManager.printAllProducts();
                         break;
                     case '2':
-                        //Laboration2.ProductManager.createNewProduct();
+                        ProductManager.createNewProduct();
                         break;
                     case '3':
                         ProductManager.manageProductMenu();
@@ -54,21 +54,16 @@ public class Main {
                         ProductManager.searchProductsByPrice();
                         break;
                     case '6':
-                        //FileWriter.printFileAsStream();
+                        FileWriter.saveProductsToFile();
                         break;
-                    case '0':
-                        flag = false;
-                        break;
+                    case 'e':
+                        FileWriter.saveProductsToFile();
+                        System.out.println("Shutting down...");
+                        System.exit(0);
                     default:
                         System.out.println("Not an valid option, try again.\n");
                 }
             }
         }
-
-    public static void pressEnterToContinue() {
-        System.out.println("Press \"ENTER\" to continue..");
-        scanner.nextLine();
-    }
-
 }
 

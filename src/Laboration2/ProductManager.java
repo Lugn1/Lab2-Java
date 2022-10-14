@@ -1,39 +1,15 @@
 package Laboration2;
 
 import java.util.*;
-
-
+import static Laboration2.FileWriter.productList;
 public class ProductManager {
 
     public static Scanner scanner = new Scanner(System.in);
-    private static List<Product> allProductsList = new ArrayList<>();
-
-//    public static List<Laboration2.Product> readProductsFromFile() {        // TODO READ FROM FILE
-//
-//        return List.of(
-//                new Laboration2.Product(new Laboration2.Category("FRUIT"), "BANANA", 8, "DOLE",
-//                        1234, 45),
-//                new Laboration2.Product(new Laboration2.Category("DAIRY"), "MILK", 20, "ARLA",
-//                        4312, 50),
-//                new Laboration2.Product(new Laboration2.Category("CANDY"), "CHOCOLATE", 25, "MARABOU",
-//                        3541, 89),
-//                new Laboration2.Product(new Laboration2.Category("BREAD"), "WHITE TOAST", 35, "TIPTOP",
-//                        5143, 25),
-//                new Laboration2.Product(new Laboration2.Category("FRUIT"), "PEAR", 35, "RANDOM",
-//                        6543, 25),
-//                new Laboration2.Product(new Laboration2.Category("DAIRY"), "CHEESE", 35, "GET",
-//                        2222, 25),
-//                new Laboration2.Product(new Laboration2.Category("CANDY"), "LOLLIPOP", 35, "CRUSH",
-//                        1111, 25),
-//                new Laboration2.Product(new Laboration2.Category("FRUIT"), "APPLE", 8, "APPLEZ",
-//                        1231, 76));
-//    }
 
     public static void printAllProducts() {
-        scanner.nextLine();
         System.out.println("ALL PRODUCTS");
         System.out.println("---------------");
-        allProductsList.stream().map(Product::toString)
+        productList.stream().map(Product::toString)
                 .sorted()
                 .forEach(System.out::println);
 
@@ -45,7 +21,8 @@ public class ProductManager {
         System.out.println("""
                 1. Manage a product's stock NOT USED
                 2. Change a product's category NOT USED
-                3. Remove a product from storage""");
+                3. Change a product's name 
+                4. Remove a product from storage""");
 
 
         System.out.println("What do you want to do?");
@@ -57,6 +34,8 @@ public class ProductManager {
         else if (optionChoice == '2')
             changeProductCategory();
         else if (optionChoice == '3')
+            changeProductName();
+        else if (optionChoice == '4')
             removeProduct();
         else
             System.out.println("Not an option.");
@@ -66,37 +45,44 @@ public class ProductManager {
 
     }
 
+    private static void changeProductName() {
+    }
 
     private static void removeProduct() {
         printProducts();
-        scanner.nextLine();
-        System.out.println("Enter the product you want to manage: ");
-        String userProductChoice = scanner.nextLine().toUpperCase();
+        String userProductChoice = chooseProduct();
 
         try {
-        Product removeChosenProduct = allProductsList.stream()
+        Product removeChosenProduct = productList.stream()
                 .filter(product -> product.getProductName().equals(userProductChoice))
                 .reduce((product, product2) -> product2).get();
 
-        allProductsList.remove(removeChosenProduct);
+            productList.remove(removeChosenProduct);
             System.out.println(userProductChoice + " was successfully removed from storage.");
-            Main.pressEnterToContinue();
-            scanner.nextLine();
+            pressEnterToContinue();
+
 
         } catch (Exception e) {
-            System.out.println("No such product. Redirecting back to menu.");
+            System.out.println("No such product. Redirecting back to main menu.");
         }
 
 
     }
 
+    private static String chooseProduct() {
+        scanner.nextLine();
+        System.out.println("Enter the product you want to manage: ");
+        return scanner.nextLine().toUpperCase();
+    }
+
     private static void changeProductCategory() {
+        
 
     }
 
     public static void changeStorageAmount(String userProductChoice) {      // TODO INPUT VALIDATION, crashar med bokstäver
 
-        allProductsList.stream().map(Product::getProductName)
+        productList.stream().map(Product::getProductName)
                         .equals(userProductChoice);
 
 
@@ -107,14 +93,14 @@ public class ProductManager {
 
 
     private static void printProducts() {
-        allProductsList.stream().map(Product::getProductName)
+        productList.stream().map(Product::getProductName)
                 .sorted()
                 .forEach(System.out::println);
     }
 
     private static void newStorageAmount(int input) {       // TODO INPUT VALIDATION crashar med bokstäver
         System.out.println("Enter new amount: ");
-        allProductsList.get(input).setStorageAmount(scanner.nextInt());
+        productList.get(input).setStorageAmount(scanner.nextInt());
 
         //changeStorageAmount();
     }
@@ -124,44 +110,66 @@ public class ProductManager {
         System.out.println("Enter category or product:");
         String userInput = scanner.nextLine().toUpperCase();
 
-        ProductManager.allProductsList.stream()
-                .filter(product -> Category.getCategoryName().equals(userInput)
-                                                || product.getProductName().equals(userInput))
+
+        System.out.println("RESULTS: ");
+        productList.stream()
+        .filter(products -> products.getCategoryName().equals(userInput)
+                                                || products.getProductName().contains(userInput))
                 .forEach(System.out::println);
+
+        pressEnterToContinue();
 
     }
 
     public static void createNewProduct() {
-        String category, productName, trademark, EAN;
-        int amount, price;
+        String categoryName, productName, trademark, EAN;
+        int amount;
+        double price;
+
+        try {
+            System.out.println("Enter product category: ");
+            categoryName = scanner.nextLine().toUpperCase();
+            System.out.println("Enter product name: ");
+            productName = scanner.nextLine().toUpperCase();
+            System.out.println("Enter product trademark: ");
+            trademark = scanner.nextLine().toUpperCase();
+            System.out.println("Enter product EAN code: ");
+            EAN = scanner.nextLine().toUpperCase();
+            System.out.println("Enter product price: ");
+            price = scanner.nextDouble();
+            scanner.nextLine();
+            System.out.println("Enter amount: ");
+            amount = scanner.nextInt();
+            scanner.nextLine();
+
+            FileWriter.addProductToFile(new Product(categoryName, productName, price, trademark, EAN, amount));
 
 
-        System.out.println("Enter product category: ");
-        category = scanner.nextLine().toUpperCase();
-        System.out.println("Enter product name: ");
-        productName = scanner.nextLine().toUpperCase();
-        System.out.println("Enter product trademark: ");
-        trademark = scanner.nextLine().toUpperCase();
-        System.out.println("Enter product price: ");
-        price = scanner.nextInt();
-        System.out.println("Enter amount: ");
-        amount = scanner.nextInt();
-        System.out.println("Enter product EAN code: ");
-        EAN = scanner.nextLine();
+        } catch (InputMismatchException e){
+            System.out.println("Invalid input.");
+        }
 
-        allProductsList.add(new Product(new Category(category),productName,price,trademark,EAN, amount));
+        // addProductToFile()
     }
 
     public static void searchProductsByPrice() {
 
         System.out.println("Enter minimum price: ");
-        double minPrice = scanner.nextDouble();
+        int minPrice = scanner.nextInt();
+        scanner.nextLine();
         System.out.println("Enter maximum price: ");
-        double maxPrice = scanner.nextDouble();
+        int maxPrice = scanner.nextInt();
+        scanner.nextLine();
 
-        allProductsList.stream()
+        productList.stream()
                 .filter(productPrice -> productPrice.getPrice() <= maxPrice && productPrice.getPrice() >= minPrice)
+                .sorted(Comparator.comparing((Product::getProductName)))
                 .forEach(System.out::println);
+    }
+
+    public static void pressEnterToContinue() {
+        System.out.println("Press \"ENTER\" to continue..");
+        scanner.nextLine();
     }
 }
 
