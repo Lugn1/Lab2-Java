@@ -112,6 +112,8 @@ public class ProductManager {
             }
 
         } else System.out.println("Invalid input.");
+
+        scanner.nextLine();
     }
 
     public static void searchProducts() {
