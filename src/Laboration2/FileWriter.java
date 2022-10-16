@@ -18,8 +18,7 @@ public class FileWriter {
 
     protected static void createProductList() {
         try (Stream<String> lines = Files.lines(productsTxtPath)) {
-            productList = lines.skip(1)
-                    .map(FileWriter::createProductFromFile)
+            productList = lines.map(FileWriter::createProductFromFile)
                     .collect(Collectors.toList());
         } catch (IOException e) {
             e.printStackTrace();

@@ -2,39 +2,21 @@ package Laboration2;
 
 import java.util.Scanner;
 
- //TODO on startup read from file
-
 public class Main {
     public static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
        FileWriter.createProductList();
-
         Main menu = new Main();
         menu.runMenu();
-
-
     }
 
-    public static void printMainMenu(){     // TODO egen meny klass
-        System.out.println("""
-                \t\tWelcome to the store
-                --------------------------------------
-                1. Show a list of all products
-                2. Add a new product
-                3. Manage product
-                4. Search for products
-                5. Filter products by price KANSKE????
-                6. SAVE TO FILE
-                e. Save and exit
-
-                Enter menu option number and press enter: \r""");
-    }
     private void runMenu() {
 
         while (true) {
             printMainMenu();
-                char userChoice = scanner.next().charAt(0);
+            char userChoice = scanner.next().charAt(0);
+            scanner.nextLine();
             switch (userChoice) {
                 case '1' -> ProductManager.printAllProducts();
                 case '2' -> ProductManager.createNewProduct();
@@ -51,5 +33,20 @@ public class Main {
             }
             }
         }
+
+    public static void printMainMenu(){
+        System.out.println("""
+                \t\tWelcome to the store
+                --------------------------------------
+                1. Show a list of all products
+                2. Add a new product
+                3. Manage a product
+                4. Search for products
+                5. Filter products with min/max price
+                6. SAVE TO FILE
+                e. Save and exit
+
+                Enter menu option number and press enter: \r""");
+    }
 }
 

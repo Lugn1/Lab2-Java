@@ -7,8 +7,8 @@ public class Product {
     private String categoryName;
     private String productName;
     private double price;
-    private String trademark;
-    private String EAN;
+    private final String trademark;
+    private final String EAN;
     private int storageAmount;
 
     public Product(String categoryName, String productName, double price, String trademark,
@@ -75,17 +75,10 @@ public class Product {
         this.productName = productName;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
-    public void setTrademark(String trademark) {
-        this.trademark = trademark;
-    }
-
-    public void setEAN(String EAN) {
-        this.EAN = EAN;
-    }
 
     public String getCategoryName() {
         return categoryName;
